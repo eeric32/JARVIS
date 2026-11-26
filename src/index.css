@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --hud: 190 100% 50%;
+  --hud-dim: 190 100% 60%;
+  --hud-glow: 190 100% 65%;
+  --fondo-base: 4 10 18;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--hud) / 0.3) transparent;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--hud) / 0.3); border-radius: 3px; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: rgb(var(--fondo-base));
+  color: hsl(var(--hud-dim) / 0.9);
+  overflow-x: hidden;
+}
+
+.font-hud { font-family: 'Orbitron', sans-serif; }
+.font-mono-hud { font-family: 'Share Tech Mono', monospace; }
+
+.panel-hud {
+  position: relative;
+  background: linear-gradient(135deg, hsl(var(--hud) / 0.06), hsl(var(--hud) / 0.02) 50%, hsl(var(--hud) / 0.05));
+  border: 1px solid hsl(var(--hud) / 0.25);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.panel-hud:hover {
+  border-color: hsl(var(--hud) / 0.5);
+  box-shadow: 0 0 24px hsl(var(--hud) / 0.12), inset 0 0 24px hsl(var(--hud) / 0.04);
+}
+
+.panel-hud::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(225deg, hsl(var(--hud) / 0.4) 0%, transparent 50%);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.esquina-hud {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: hsl(var(--hud) / 0.7);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.fondo-rejilla {
+  background-image:
+    linear-gradient(hsl(var(--hud) / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--hud) / 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  animation: rejilla-mover 24s linear infinite;
+}
+
+@keyframes rejilla-mover {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 44px 88px, 88px 44px; }
+}
+
+@keyframes pulso-hud {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.pulso { animation: pulso-hud 2.4s ease-in-out infinite; }
+
+@keyframes escanear {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.linea-escaneo {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--hud) / 0.25), transparent);
+  animation: escanear 8s linear infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes anillo-girar {
+  to { transform: rotate(360deg); }
+}
+
+.anillo-girando { animation: anillo-girar 3s linear infinite; }
+.anillo-girando-lento { animation: anillo-girar 12s linear infinite; }
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.parpadeo { animation: parpadeo 1.4s ease-in-out infinite; }
+
+.texto-glow {
+  text-shadow: 0 0 12px hsl(var(--hud) / 0.6);
+}
+
+.btn-hud {
+  border: 1px solid hsl(var(--hud) / 0.3);
+  color: hsl(var(--hud-dim) / 0.9);
+  background: hsl(var(--hud) / 0.06);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-hud:hover {
+  border-color: hsl(var(--hud) / 0.7);
+  background: hsl(var(--hud) / 0.14);
+  box-shadow: 0 0 12px hsl(var(--hud) / 0.25);
+}
+
+.btn-hud.activo {
+  border-color: hsl(var(--hud) / 0.8);
+  background: hsl(var(--hud) / 0.18);
+  color: hsl(var(--hud-glow));
+  box-shadow: 0 0 14px hsl(var(--hud) / 0.3), inset 0 0 8px hsl(var(--hud) / 0.1);
+}
+
+select option {
+  background: rgb(6 14 24);
+  color: #fff;
+}
+
+input, select, textarea { outline: none; }
+
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 1px hsl(var(--hud) / 0.4);
+}
